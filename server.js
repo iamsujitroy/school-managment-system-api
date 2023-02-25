@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const testimonialRoutes = require('./routes/testimonialRoutes');
 
 // Initialize express app
 const app = express();
@@ -25,14 +26,13 @@ mongoose.connect(process.env.MONGODB_URI, {
 }).then(() => {
     console.log("Database Connected Successfully!!");    
 }).catch(err => {
-    console.log('Could not connect to the database', err);
+    console.error('Could not connect to the database', err);
     process.exit();
 });
 
-// Set up basic route
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+
+// All routes
+app.use('/testimonials', testimonialRoutes);
 
 
 
