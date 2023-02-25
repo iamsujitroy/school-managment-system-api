@@ -4,6 +4,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const testimonialRoutes = require('./routes/testimonialRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 // Initialize express app
 const app = express();
@@ -17,6 +18,9 @@ app.use(cors());
 
 // Load environment variables
 dotenv.config();
+
+// Set strictQuery to false to address the deprecation warning
+mongoose.set('strictQuery', false);
 
 // Connect to MongoDB
 mongoose.Promise = global.Promise;
@@ -33,6 +37,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 // All routes
 app.use('/testimonials', testimonialRoutes);
+app.use('/user', userRoutes);
 
 
 
