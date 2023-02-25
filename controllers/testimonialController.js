@@ -37,7 +37,7 @@ testimonialController.createTestimonial = async (req, res) => {
 
   try {
     const newTestimonial = await testimonial.save();
-    res.status(201).json(newTestimonial);
+    res.status(201).json({message:"testimonial added successfully"});
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
