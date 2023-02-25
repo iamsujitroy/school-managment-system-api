@@ -18,22 +18,23 @@ app.use(cors());
 dotenv.config();
 
 // Connect to MongoDB
+mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-
-const db = mongoose.connection;
-
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log('Connected to MongoDB');
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log("Database Connected Successfully!!");    
+}).catch(err => {
+    console.log('Could not connect to the database', err);
+    process.exit();
 });
 
 // Set up basic route
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
+
+
 
 // Start server
 const port = process.env.PORT || 3000;
