@@ -5,9 +5,14 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const testimonialRoutes = require('./routes/testimonialRoutes');
 const userRoutes = require('./routes/userRoutes');
+const imageRoutes = require('./routes/imageRoutes');
 
 // Initialize express app
 const app = express();
+
+// make uploads folder public
+app.use(express.static('uploads'));
+
 
 // Parse incoming request bodies in a middleware before your handlers
 app.use(bodyParser.json());
@@ -38,6 +43,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 // All routes
 app.use('/testimonials', testimonialRoutes);
 app.use('/user', userRoutes);
+app.use('/upload', imageRoutes);
 
 
 
