@@ -11,7 +11,7 @@ const testimonialSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  testimonial: {
+  message: {
     type: String,
     required: true
   },

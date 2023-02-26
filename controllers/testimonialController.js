@@ -1,4 +1,4 @@
-const Testimonial = require('../models/testimonial');
+const Testimonial = require("../models/testimonial");
 
 const testimonialController = {};
 
@@ -19,7 +19,7 @@ testimonialController.getTestimonialById = async (req, res) => {
     if (testimonial) {
       res.status(200).json(testimonial);
     } else {
-      res.status(404).json({ message: 'Testimonial not found' });
+      res.status(404).json({ message: "Testimonial not found" });
     }
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -28,16 +28,12 @@ testimonialController.getTestimonialById = async (req, res) => {
 
 // Create a new testimonial
 testimonialController.createTestimonial = async (req, res) => {
-  const testimonial = new Testimonial({
-    name: req.body.name,
-    designation: req.body.designation,
-    testimonial: req.body.testimonial,
-    image: req.body.image
-  });
-
   try {
-    const newTestimonial = await testimonial.save();
-    res.status(201).json({message:"testimonial added successfully"});
+    const { name, designation, message, image } = req.body;
+    const testimonial = new Testimonial({ name, designation, message, image}); // save the filename in the database
+    await testimonial.save();
+    
+    res.status(201).json({ success: true, message:"Testimonial added successfully", data: testimonial });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -51,8 +47,8 @@ testimonialController.updateTestimonial = async (req, res) => {
       {
         name: req.body.name,
         designation: req.body.designation,
-        testimonial: req.body.testimonial,
-        image: req.body.image
+        message: req.body.message,
+        image: req.body.image,
       },
       { new: true }
     );
@@ -60,7 +56,7 @@ testimonialController.updateTestimonial = async (req, res) => {
     if (updatedTestimonial) {
       res.status(200).json(updatedTestimonial);
     } else {
-      res.status(404).json({ message: 'Testimonial not found' });
+      res.status(404).json({ message: "Testimonial not found" });
     }
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -70,11 +66,13 @@ testimonialController.updateTestimonial = async (req, res) => {
 // Delete a testimonial by ID
 testimonialController.deleteTestimonial = async (req, res) => {
   try {
-    const deletedTestimonial = await Testimonial.findByIdAndDelete(req.params.id);
+    const deletedTestimonial = await Testimonial.findByIdAndDelete(
+      req.params.id
+    );
     if (deletedTestimonial) {
-      res.status(200).json({ message: 'Testimonial deleted' });
+      res.status(200).json({ message: "Testimonial deleted" });
     } else {
-      res.status(404).json({ message: 'Testimonial not found' });
+      res.status(404).json({ message: "Testimonial not found" });
     }
   } catch (err) {
     res.status(500).json({ message: err.message });
