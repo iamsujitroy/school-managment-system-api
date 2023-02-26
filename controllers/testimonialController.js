@@ -31,7 +31,7 @@ testimonialController.createTestimonial = async (req, res) => {
   const testimonial = new Testimonial({
     name: req.body.name,
     designation: req.body.designation,
-    testimonial: req.body.testimonial,
+    message: req.body.message,
     image: req.body.image
   });
 
@@ -51,7 +51,7 @@ testimonialController.updateTestimonial = async (req, res) => {
       {
         name: req.body.name,
         designation: req.body.designation,
-        testimonial: req.body.testimonial,
+        message: req.body.message,
         image: req.body.image
       },
       { new: true }
